@@ -1,0 +1,35 @@
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service
+
+service = Service(executable_path=GeckoDriverManager().install())
+driver = webdriver.Firefox(service=service)
+
+
+#Open any page and print a title in a console
+driver.get("https://www.udemy.com/")
+first_page_title = driver.title
+print(first_page_title)
+
+#Open any other page and print a title in a console
+driver.get("https://www.datacamp.com/")
+second_page_title = driver.title
+print(second_page_title)
+
+#Navigate back to the first page and assert that browser has opened the right page
+driver.back()
+assert driver.current_url == "https://www.udemy.com/"
+assert driver.title == first_page_title
+
+#Page refresh
+driver.refresh()
+#Get and print page URL
+print(driver.current_url)
+
+#Page forward and assert URL changing
+driver.forward()
+assert driver.current_url != "https://www.udemy.com/"
+assert driver.current_url == "https://www.datacamp.com/"
+
+driver.quit()
+
